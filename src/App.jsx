@@ -5,6 +5,8 @@ import Favorites from './pages/Favorites';
 import './App.css';
 import { searchMovies } from './services/movieService';
 import { useState } from 'react';
+import { MovieWatchListProvider } from './contexts/MovieContext';
+import MovieWatchList from './pages/MovieWatchList';
 
 function App() {
   const [searchResults, setSearchResults] = useState(null);
@@ -15,15 +17,18 @@ function App() {
   }
 
   return (
-    <Router>
-      <div className="app">
-        <Header onSearch={handleSearch}/>
-        <Routes>
-          <Route path="/" element={<Home searchResults={searchResults}/>} />
-          <Route path="/favorites" element={<Favorites />} />
-        </Routes>
-      </div>
-    </Router>
+    <MovieWatchListProvider>
+      <Router>
+        <div className="app">
+          <Header onSearch={handleSearch}/>
+          <Routes>
+            <Route path="/" element={<Home searchResults={searchResults}/>} />
+            <Route path="/favorites" element={<Favorites />} />
+            <Route path='/watchlist' element={<MovieWatchList />} />
+          </Routes>
+        </div>
+      </Router>
+    </MovieWatchListProvider>
   );
 };
 
